@@ -133,8 +133,8 @@ Appium.prototype.configure = function(desiredCaps, cb) {
                       typeof desiredCaps.app !== "undefined" &&
                       desiredCaps.app);
   this.deviceType = this.getDeviceType(desiredCaps);
-  this.args.androidPackage = desiredCaps["app-package"] || this.args.androidPackage;
-  this.args.androidActivity = desiredCaps["app-activity"] || this.args.androidActivity;
+  this.args.androidPackage = desiredCaps["appPackage"] || this.args.androidPackage;
+  this.args.androidActivity = desiredCaps["appActivity"] || this.args.androidActivity;
   if (hasAppInCaps) {
     if (desiredCaps.app[0] === "/") {
       var appPath = desiredCaps.app
