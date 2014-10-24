@@ -3,7 +3,7 @@
 var setup = require("../setup-base"),
     webviewHelper = require("../../../helpers/webview"),
     loadWebView = webviewHelper.loadWebView,
-    isChrome = webviewHelper.isChrome,
+    isAndroidBrowser = webviewHelper.isAndroidBrowser,
     testEndpoint = webviewHelper.testEndpoint,
     _ = require('underscore');
 
@@ -27,7 +27,7 @@ module.exports = function (desired) {
     describe('within webview', function () {
       // TODO: investigate why we need that
       function _ignoreEncodingBug(value) {
-        if (isChrome(desired)) {
+        if (isAndroidBrowser(desired)) {
           console.warn('Going round android bug: whitespace in cookies.');
           return encodeURI(value);
         } else return value;

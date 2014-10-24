@@ -18,12 +18,16 @@ var spinTitle = function (expTitle, browser, _timeout) {
     });
 };
 
+var chromeBrowsers = ["chrome", "chromium", "chromebeta"];
+var androidBrowsers = chromeBrowsers.concat(["browser"]);
+var allBrowsers = androidBrowsers.concat(["safari"]);
+
 var loadWebView = function (desired, browser, urlToLoad, titleToSpin) {
   var app = typeof desired === 'object' ? desired.app || desired.browserName  : desired;
 
   var uuid = uuidGenerator.v1();
   if (typeof urlToLoad === "undefined") {
-    if (app === "chrome" || app === "chromium" || app === "chromebeta") {
+    if (_.contains(androidBrowsers, app)) {
       urlToLoad = env.CHROME_GUINEA_TEST_END_POINT + '?' + uuid;
     } else {
       urlToLoad = env.GUINEA_TEST_END_POINT + '?' + uuid;
@@ -32,7 +36,7 @@ var loadWebView = function (desired, browser, urlToLoad, titleToSpin) {
   if (typeof titleToSpin === "undefined") {
     titleToSpin = uuid;
   }
-  if (_.contains(["safari", "chrome", "chromium", "chromebeta"], app)) {
+  if (_.contains(allBrowsers, app)) {
     return browser
       .get(urlToLoad)
       .sleep(3000)
@@ -60,9 +64,13 @@ var loadWebView = function (desired, browser, urlToLoad, titleToSpin) {
 
 
 var isChrome = function (desired) {
-  var chromes = ["chrome", "chromium", "chromebeta"];
-  return _.contains(chromes, desired.app) ||
-         _.contains(chromes, desired.browserName);
+  return _.contains(chromeBrowsers, desired.app) ||
+         _.contains(chromeBrowsers, desired.browserName);
+};
+
+var isAndroidBrowser = function (desired) {
+  return _.contains(androidBrowsers, desired.app) ||
+         _.contains(androidBrowsers, desired.browserName);
 };
 
 function skip(reason, done) {
@@ -71,13 +79,14 @@ function skip(reason, done) {
 }
 
 var testEndpoint = function (desired) {
-    return isChrome(desired) ? env.CHROME_TEST_END_POINT : env.TEST_END_POINT;
+  return isAndroidBrowser(desired) ? env.CHROME_TEST_END_POINT : env.TEST_END_POINT;
 };
 
 module.exports = {
   spinTitle: spinTitle,
   loadWebView: loadWebView,
   isChrome: isChrome,
+  isAndroidBrowser: isAndroidBrowser,
   skip: skip,
   testEndpoint: testEndpoint
 };

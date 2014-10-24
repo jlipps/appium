@@ -3,7 +3,7 @@
 var setup = require("../setup-base"),
     webviewHelper = require("../../../helpers/webview"),
     loadWebView = webviewHelper.loadWebView,
-    isChrome = webviewHelper.isChrome;
+    isAndroidBrowser = webviewHelper.isAndroidBrowser;
 
 module.exports = function (desired) {
 
@@ -18,7 +18,7 @@ module.exports = function (desired) {
       driver
         .title().should.eventually.include("I am a page title")
         .then(function () {
-          if (isChrome(desired)) {
+          if (isAndroidBrowser(desired)) {
             return;
           }
           return driver
