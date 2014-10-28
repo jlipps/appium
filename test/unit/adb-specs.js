@@ -1,6 +1,6 @@
 "use strict";
 
-var ADB = require('../../lib/devices/android/adb'),
+var ADB = require('../../lib_es5/devices/android/adb'),
   chai = require('chai'),
   should = chai.should(),
   Q = require('q');

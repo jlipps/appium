@@ -1,7 +1,7 @@
 "use strict";
 
-var Device = require('../../lib/devices/device.js')
-  , capConversion = require('../../lib/server/capabilities.js').capabilityConversions
+var Device = require('../../lib_es5/devices/device.js')
+  , capConversion = require('../../lib_es5/server/capabilities.js').capabilityConversions
   , chai = require('chai')
   , _ = require('underscore');
 

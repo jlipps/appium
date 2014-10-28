@@ -1,7 +1,7 @@
 "use strict";
 
 var path = require('path')
-  , gruntHelpers = require('./grunt-helpers.js')
+  , gruntHelpers = require('./lib_es5/grunt-helpers.js')
   , authorize = gruntHelpers.authorize
   , tail = gruntHelpers.tail
   , buildApp = gruntHelpers.buildApp
@@ -21,7 +21,7 @@ var path = require('path')
   , setBuildTime = gruntHelpers.setBuildTime
   , getSampleCode = gruntHelpers.getSampleCode
   , setGitRev = gruntHelpers.setGitRev
-  , getGitRev = require('./lib/helpers').getGitRev;
+  , getGitRev = require('./lib_es5/helpers').getGitRev;
 
 module.exports = function (grunt) {
   grunt.initConfig({
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
       files: {
         src: ['*.js', './**/*.js'],
         options: {
-          ignores: ['./submodules/**/*.js', './node_modules/**/*.js', './sample-code/**/*.js', './test/**/*.js', './lib/server/static/**/*.js', './lib/devices/firefoxos/atoms/*.js', './lib/devices/ios/uiauto/**/*.js']
+          ignores: ['./bin_es5/**/*.js', './lib_es5/**/*.js', './submodules/**/*.js', './node_modules/**/*.js', './sample-code/**/*.js', './test/**/*.js', './lib/server/static/**/*.js', './lib/devices/firefoxos/atoms/*.js', './lib/devices/ios/uiauto/**/*.js']
         }
       },
       test: {
@@ -74,6 +74,7 @@ module.exports = function (grunt) {
   , jscs: {
     files: [
       '**/*.js', '!submodules/**', '!node_modules/**',
+      '!lib_es5/**', '!bin_es5/**',
       '!lib/server/static/**', '!lib/devices/firefoxos/atoms/*.js',
       '!test/harmony/**/*.js', '!sample-code/examples/node/**/*-yiewd.js',
       '!sample-code/apps/**', '!sample-code/examples/php/vendor/**'],

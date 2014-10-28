@@ -1,7 +1,7 @@
 "use strict";
 
 var chai = require('chai')
-  , controller_path = '../../lib/devices/ios/ios-controller.js'
+  , controller_path = '../../lib_es5/devices/ios/ios-controller.js'
   , controller = require(controller_path)
   , createGetElementCommand = controller.createGetElementCommand
   , getSelectorForStrategy = controller.getSelectorForStrategy;

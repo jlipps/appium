@@ -1,6 +1,6 @@
 'use strict';
 
-var common = require('../../lib/devices/common.js')
+var common = require('../../lib_es5/devices/common.js')
   , checkValidLocStrat = common.checkValidLocStrat
   , _  = require('underscore');
 

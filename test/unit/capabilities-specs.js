@@ -1,7 +1,7 @@
 "use strict";
 
-var Capabilities = require('../../lib/server/capabilities.js')
-  , loggerjs = require('../../lib/server/logger')
+var Capabilities = require('../../lib_es5/server/capabilities.js')
+  , loggerjs = require('../../lib_es5/server/logger')
   , logger = loggerjs.get('appium')
   , sinon = require('sinon')
   , chai = require('chai')

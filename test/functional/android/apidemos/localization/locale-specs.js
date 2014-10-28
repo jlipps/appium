@@ -3,7 +3,7 @@
 var env = require('../../../../helpers/env')
   , setup = require("../../../common/setup-base")
   , desired = require("../desired")
-  , ADB = require('../../../../../lib/devices/android/adb')
+  , ADB = require('../../../../../lib_es5/devices/android/adb')
   , Q = require('q')
   , exec = Q.denodeify(require('child_process').exec)
   , _ = require('underscore');

@@ -138,6 +138,11 @@ reset_general() {
     fi
 }
 
+reset_traceur() {
+  echo "TRANSPILING JS WITH TRACEUR"
+  run_cmd ./traceur.sh
+}
+
 reset_sample_code() {
     echo "* Initializing sample code and test apps"
     if $hardcore ; then
@@ -566,6 +571,7 @@ main() {
     fi
     reset_npm
     reset_general
+    reset_traceur
     if $include_dev ; then
         reset_sample_code
     fi

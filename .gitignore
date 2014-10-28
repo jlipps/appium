@@ -2,6 +2,8 @@
 *.swp
 .DS_Store
 npm*.log
+lib_es5
+bin_es5
 node_modules
 sample-code
 *.trace

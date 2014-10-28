@@ -4,7 +4,7 @@ var initSession = require('../../helpers/session').initSession
   , getTitle = require('../../helpers/title').getTitle
   , _ = require('underscore')
   , getAppPath = require('../../helpers/app').getAppPath
-  , tempdir = require('../../../lib/tempdir')
+  , tempdir = require('../../../lib_es5/tempdir')
   , ncp = require('ncp');
 
 require('../../helpers/setup-chai.js');

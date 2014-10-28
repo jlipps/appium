@@ -29,11 +29,10 @@
   "engines": [
     "node"
   ],
-  "main": "./lib/server/main.js",
+  "main": "./lib_es5/server/main.js",
   "bin": {
-    "appium": "./bin/appium.js",
-    "appium-doctor": "./bin/appium-doctor.js",
-    "authorize_ios": "./bin/authorize-ios.js"
+    "appium-doctor": "./bin_es5/appium-doctor.js",
+    "authorize_ios": "./bin_es5/authorize-ios.js"
   },
   "directories": {
     "lib": "./lib",
@@ -118,6 +117,7 @@
     "sinon-chai": "~2.6.0",
     "socket.io-client": "~1.2.1",
     "socks": "~0.0.1",
+    "traceur": "~0.0.72",
     "underscore-cli": "~0.2.17",
     "unorm": "~1.3.3",
     "wd": "~0.3.8",

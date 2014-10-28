@@ -3,8 +3,8 @@
 var chai = require('chai')
   , should = chai.should()
   , childProcess = require('child_process')
-  , Android = require('../../../lib/devices/android/android.js')
-  , ADB = require('../../../lib/devices/android/adb');
+  , Android = require('../../../lib_es5/devices/android/android.js')
+  , ADB = require('../../../lib_es5/devices/android/adb');
 
 // todo: hangs when doing 'adb shell input keyevent 3'
 describe("android tests - device state - @skip-android-all", function () {

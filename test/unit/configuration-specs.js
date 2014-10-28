@@ -1,6 +1,6 @@
 "use strict";
 
-var getAppium = require('../../lib/appium')
+var getAppium = require('../../lib_es5/appium')
   , _ = require('underscore');
 
 var assertCapsGiveCorrectDevices = function (appium, args) {

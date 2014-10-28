@@ -5,9 +5,9 @@
 
 var chai = require('chai')
   , should = chai.should()
-  , getAppium = require('../../lib/appium.js')
+  , getAppium = require('../../lib_es5/appium.js')
   , mock = require('../helpers/mock.js')
-  , IOS = require('../../lib/devices/ios/ios.js')
+  , IOS = require('../../lib_es5/devices/ios/ios.js')
   , path = require('path');
 
 mock.noop(IOS.prototype, 'start');

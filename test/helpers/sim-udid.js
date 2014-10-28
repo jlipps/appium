@@ -1,7 +1,7 @@
 "use strict";
 
-var IOS = require("../../lib/devices/ios/ios")
-  , Instruments = require('../../lib/devices/ios/instruments');
+var IOS = require("../../lib_es5/devices/ios/ios")
+  , Instruments = require('../../lib_es5/devices/ios/instruments');
 
 exports.getSimUdid = function (xcodeVer, sdkVer, desired, cb) {
   var opts = {

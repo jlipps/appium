@@ -2,9 +2,9 @@
 
 var _ = require('underscore')
   , env = require('../../../helpers/env.js')
-  , xcode = require('../../../../lib/devices/ios/xcode.js')
-  , Simulator = require('../../../../lib/devices/ios/simulator.js')
-  , settingsPlists = require('../../../../lib/devices/ios/settings.js')
+  , xcode = require('../../../../lib_es5/devices/ios/xcode.js')
+  , Simulator = require('../../../../lib_es5/devices/ios/simulator.js')
+  , settingsPlists = require('../../../../lib_es5/devices/ios/settings.js')
   , getSimUdid = require('../../../helpers/sim-udid').getSimUdid;
 
 exports.ios6 = function (driver, setting, expected, cb) {

@@ -5,7 +5,7 @@
 
 var path = require('path')
   , _ = require('underscore')
-  , IOS = require('../../lib/devices/ios/ios.js')
+  , IOS = require('../../lib_es5/devices/ios/ios.js')
   , chai = require('chai')
   , expect = chai.expect;
 

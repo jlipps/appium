@@ -1,7 +1,7 @@
 "use strict";
 
-var helpers = require('../../lib/helpers.js')
-  , logger = require('../../lib/server/logger.js').get('appium')
+var helpers = require('../../lib_es5/helpers.js')
+  , logger = require('../../lib_es5/server/logger.js').get('appium')
   , chai = require('chai')
   , sinon = require('sinon');
 

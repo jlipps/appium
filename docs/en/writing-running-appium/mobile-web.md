@@ -105,7 +105,7 @@ $ ./reset.sh --ios --real-safari --code-sign '<code signing idendity>'
 $ ./reset.sh --ios --real-safari --code-sign '<code signing idendity>' --profile '<retrieved profile identity code>'
 
 # Once successfully configured and with the safari launcher built, start the server as per usual
-$ node /lib/server/main.js -U <UDID>
+$ node . -U <UDID>
 ```
 
 ### Running your test
