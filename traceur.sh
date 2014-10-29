@@ -23,10 +23,16 @@ function transpile {
   do
     sub="$in/"
     file=${file#$sub}
-    $traceur --out $out/$file --script $in/$file \
-        --async-functions \
-        --array-comprehension \
-        --type-assertions
+    $traceur \
+      --out $out/$file \
+      --script $in/$file \
+      --async-functions \
+      --array-comprehension \
+      --types true \
+      --type-assertions \
+      --type-assertion-module ../node_modules/rtts-assert/src/assert \
+      --annotations
+    perl -pi -e '!$x && s|^("use strict";)?|"use strict";\nrequire("traceur/bin/traceur-runtime");\n| && ($x=1)' $out/$file
   done
 }
 
