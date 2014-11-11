@@ -57,6 +57,7 @@
     "date-utils": "~1.2.15",
     "difflib": "~0.2.4",
     "express": "~4.5.1",
+    "gitmodified": "~1.0.5",
     "glob": "~4.0.0",
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
