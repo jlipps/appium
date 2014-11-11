@@ -49,7 +49,6 @@ function run_traceur {
       --script $in/$file \
       --async-functions \
       --array-comprehension
-    perl -pi -e '!$x && s|^("use strict";)?|"use strict";\nrequire("traceur/bin/traceur-runtime");\n| && ($x=1)' $out/$file
 }
 
 function transpile_files {
@@ -68,6 +67,7 @@ function transpile_files {
         done
     fi
 }
+
 
 if $only_modified ; then
     transpile_files lib lib_es5

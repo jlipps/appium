@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
-var authorize = require('../grunt-helpers.js').authorize;
+require('traceur/bin/traceur-runtime');
+
+var authorize = require('../lib_es5/grunt-helpers.js').authorize;
 
 var gruntMock = {
   fatal: function (msg) {
