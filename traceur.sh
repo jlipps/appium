@@ -31,6 +31,7 @@ function transpile {
 
   echo "* Transpiling js files"
   js_files=$(find $in -name "*.js")
+  old_ifs=$IFS
   IFS=$'\n'
   for file in $js_files
   do
@@ -38,6 +39,7 @@ function transpile {
     file=${file#$sub}
     run_traceur $in $out $file
   done
+  IFS=$old_ifs
 }
 
 function run_traceur {
