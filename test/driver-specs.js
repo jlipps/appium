@@ -135,8 +135,8 @@ describe('AppiumDriver', function () {
         await appium.createSession(undefined, undefined, w3cCaps);
         mockFakeDriver.verify();
       });
-      it('should call "createSession" with JSONWP capabilities if W3C has incomplete capabilities', async function () {
-        let w3cCaps = {
+      it('should not call "createSession" with JSONWP capabilities if W3C has incomplete capabilities', async function () {
+        const w3cCaps = {
           ...W3C_CAPS,
           alwaysMatch: {
             ...W3C_CAPS.alwaysMatch,
@@ -144,25 +144,13 @@ describe('AppiumDriver', function () {
           },
         };
 
-        let jsonwpCaps = {
+        const jsonwpCaps = {
           ...BASE_CAPS,
           automationName: 'Fake',
           someOtherParam: 'someOtherParam',
         };
 
-        let expectedW3cCaps = {
-          ...w3cCaps,
-          alwaysMatch: {
-            ...w3cCaps.alwaysMatch,
-            'appium:automationName': 'Fake',
-            'appium:someOtherParam': 'someOtherParam',
-          },
-        };
-
-        mockFakeDriver.expects('createSession')
-          .once().withArgs(jsonwpCaps, undefined, expectedW3cCaps)
-          .returns([SESSION_ID, jsonwpCaps]);
-
+        mockFakeDriver.expects('createSession').never();
         await appium.createSession(jsonwpCaps, undefined, w3cCaps);
         mockFakeDriver.verify();
       });
