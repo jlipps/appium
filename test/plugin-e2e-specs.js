@@ -18,10 +18,10 @@ const FAKE_DRIVER_DIR = path.resolve(__dirname, '..', '..', 'node_modules', 'app
 const TEST_SERVER = `http://${TEST_HOST}:${TEST_PORT}`;
 
 const caps = {
-  automationName: 'Fake',
+  'appium:automationName': 'Fake',
   platformName: 'Fake',
-  deviceName: 'Fake',
-  app: TEST_FAKE_APP
+  'appium:deviceName': 'Fake',
+  'appium:app': TEST_FAKE_APP
 };
 
 describe('FakePlugin', function () {

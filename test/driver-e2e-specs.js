@@ -23,10 +23,10 @@ const FAKE_DRIVER_DIR = path.resolve(__dirname, '..', '..', 'node_modules', 'app
 const should = chai.should();
 const shouldStartServer = process.env.USE_RUNNING_SERVER !== '0';
 const caps = {
-  automationName: 'Fake',
+  'appium:automationName': 'Fake',
   platformName: 'Fake',
-  deviceName: 'Fake',
-  app: TEST_FAKE_APP
+  'appium:deviceName': 'Fake',
+  'appium:app': TEST_FAKE_APP
 };
 
 describe('FakeDriver - via HTTP', function () {
