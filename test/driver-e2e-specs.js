@@ -23,11 +23,28 @@ const FAKE_DRIVER_DIR = path.resolve(__dirname, '..', '..', 'node_modules', 'app
 const should = chai.should();
 const shouldStartServer = process.env.USE_RUNNING_SERVER !== '0';
 const caps = {
+  automationName: 'Fake',
+  platformName: 'Fake',
+  deviceName: 'Fake',
+  app: TEST_FAKE_APP
+};
+
+const paramW3CCaps = {
   'appium:automationName': 'Fake',
   platformName: 'Fake',
   'appium:deviceName': 'Fake',
   'appium:app': TEST_FAKE_APP
 };
+
+const createSessionW3CCaps = {
+  capabilities: {
+    'appium:automationName': 'Fake',
+    platformName: 'Fake',
+    'appium:deviceName': 'Fake',
+    'appium:app': TEST_FAKE_APP
+  }
+};
+
 
 describe('FakeDriver - via HTTP', function () {
   let server = null;
@@ -71,7 +88,7 @@ describe('FakeDriver - via HTTP', function () {
   describe('session handling', function () {
     it('should start and stop a session', async function () {
       let driver = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId] = await driver.init(caps);
+      let [sessionId] = await driver.init(null, null, createSessionW3CCaps);
       should.exist(sessionId);
       sessionId.should.be.a('string');
       await driver.quit();
@@ -80,11 +97,11 @@ describe('FakeDriver - via HTTP', function () {
 
     it('should be able to run two FakeDriver sessions simultaneously', async function () {
       let driver1 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId1] = await driver1.init(caps);
+      let [sessionId1] = await driver1.init(null, null, createSessionW3CCaps);
       should.exist(sessionId1);
       sessionId1.should.be.a('string');
       let driver2 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId2] = await driver2.init(caps);
+      let [sessionId2] = await driver2.init(null, null, createSessionW3CCaps);
       should.exist(sessionId2);
       sessionId2.should.be.a('string');
       sessionId1.should.not.equal(sessionId2);
@@ -93,14 +110,14 @@ describe('FakeDriver - via HTTP', function () {
     });
 
     it('should not be able to run two FakeDriver sessions simultaneously when one is unique', async function () {
-      let uniqueCaps = _.clone(caps);
+      let uniqueCaps = _.clone(createSessionW3CCaps);
       uniqueCaps.uniqueApp = true;
       let driver1 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId1] = await driver1.init(uniqueCaps);
+      let [sessionId1] = await driver1.init(null, null, uniqueCaps);
       should.exist(sessionId1);
       sessionId1.should.be.a('string');
       let driver2 = wd.promiseChainRemote(TEST_SERVER);
-      await driver2.init(caps).should.eventually.be.rejected;
+      await driver2.init(null, null, createSessionW3CCaps).should.eventually.be.rejected;
       await driver1.quit();
     });
 
@@ -109,9 +126,9 @@ describe('FakeDriver - via HTTP', function () {
 
       let localCaps = Object.assign({
         newCommandTimeout: 0.25,
-      }, caps);
+      }, null, null, createSessionW3CCaps);
 
-      let [sessionId] = await driver.init(localCaps);
+      let [sessionId] = await driver.init(null, null, localCaps);
       should.exist(sessionId);
 
       await B.delay(250);
@@ -122,7 +139,7 @@ describe('FakeDriver - via HTTP', function () {
       // Try with valid capabilities and check that it returns a session ID
       const w3cCaps = {
         capabilities: {
-          alwaysMatch: {automationName: 'Fake', platformName: 'Fake'},
+          alwaysMatch: {'appium:automationName': 'Fake', platformName: 'Fake'},
           firstMatch: [{'appium:deviceName': 'Fake', 'appium:app': TEST_FAKE_APP}],
         }
       };
@@ -167,11 +184,8 @@ describe('FakeDriver - via HTTP', function () {
 
     it('should accept a combo of W3C and JSONWP capabilities but default to W3C', async function () {
       const combinedCaps = {
-        'desiredCapabilities': {
-          ...caps,
-        },
         'capabilities': {
-          'alwaysMatch': {...caps},
+          'alwaysMatch': {...paramW3CCaps},
           'firstMatch': [{
             w3cParam: 'w3cParam',
           }],
@@ -191,42 +205,12 @@ describe('FakeDriver - via HTTP', function () {
       await axios.delete(`${baseUrl}/${value.sessionId}`);
     });
 
-    it('should accept a combo of W3C and JSONWP and if JSONWP has extraneous keys, they should be merged into W3C capabilities', async function () {
-      const combinedCaps = {
-        'desiredCapabilities': {
-          ...caps,
-          automationName: 'Fake',
-          anotherParam: 'Hello',
-        },
-        'capabilities': {
-          'alwaysMatch': {...caps},
-          'firstMatch': [{
-            w3cParam: 'w3cParam',
-          }],
-        }
-      };
-
-      const {sessionId, status, value} = (await axios.post(baseUrl, combinedCaps)).data;
-      should.not.exist(sessionId);
-      should.not.exist(status);
-      value.sessionId.should.exist;
-      value.capabilities.should.deep.equal({
-        ...caps,
-        automationName: 'Fake',
-        anotherParam: 'Hello',
-        w3cParam: 'w3cParam',
-      });
-
-      // End session
-      await axios.delete(`${baseUrl}/${value.sessionId}`);
-    });
-
     it('should reject bad automation name with an appropriate error', async function () {
       const w3cCaps = {
         capabilities: {
           alwaysMatch: {
-            ...caps,
-            automationName: 'BadAutomationName',
+            ...paramW3CCaps,
+            'appium:automationName': 'BadAutomationName',
           },
         },
       };
@@ -238,7 +222,7 @@ describe('FakeDriver - via HTTP', function () {
         capabilities: {
           alwaysMatch: {},
           firstMatch: [{}, {
-            ...caps
+            ...paramW3CCaps
           }],
         },
       };
@@ -259,13 +243,14 @@ describe('FakeDriver - via HTTP', function () {
         capabilities: {
           alwaysMatch: {},
           firstMatch: [{}, {
-            ...caps,
+            ...paramW3CCaps,
             platformName: null,
-            automationName: null,
-            deviceName: null,
+            'appium:automationName': null,
+            'appium:deviceName': null,
           }],
         },
       };
+      // TODO: Should raise an error, 404
       const {value, sessionId, status} = (await axios.post(baseUrl, combinedCaps)).data;
       status.should.exist;
       sessionId.should.exist;
@@ -282,8 +267,8 @@ describe('FakeDriver - via HTTP', function () {
         },
         capabilities: {
           alwaysMatch: {
-            ...caps,
-            deviceName: 'Fake',
+            ...paramW3CCaps,
+            'appium:deviceName': 'Fake',
           },
         },
       };
@@ -312,7 +297,7 @@ describe('FakeDriver - via HTTP', function () {
         },
         capabilities: {
           alwaysMatch: {
-            ...caps,
+            ...paramW3CCaps,
           },
           firstMatch: [],
         },
