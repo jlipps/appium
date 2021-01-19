@@ -80,7 +80,7 @@ describe('FakePlugin', function () {
     });
     it('should not update method map if plugin is not activated', async function () {
       const driver = wd.promiseChainRemote(TEST_SERVER);
-      const [sessionId] = await driver.init(null, null, w3cCaps);
+      const [sessionId] = await driver.init(w3cCaps);
       try {
         await axios.post(`${baseUrl}/${sessionId}/fake_data`, {data: {fake: 'data'}}).should.eventually.be.rejectedWith(/404/);
       } finally {
@@ -89,7 +89,7 @@ describe('FakePlugin', function () {
     });
     it('should not handle commands if plugin is not activated', async function () {
       const driver = wd.promiseChainRemote(TEST_SERVER);
-      const [sessionId] = await driver.init(null, null, w3cCaps);
+      const [sessionId] = await driver.init(w3cCaps);
       try {
         const el = (await axios.post(`${baseUrl}/${sessionId}/element`, {using: 'xpath', value: '//MockWebView'})).data.value;
         el.should.not.have.property('fake');
@@ -120,7 +120,7 @@ describe('FakePlugin', function () {
 
       it('should modify the method map with new commands', async function () {
         const driver = wd.promiseChainRemote(TEST_SERVER);
-        const [sessionId] = await driver.init(null, null, w3cCaps);
+        const [sessionId] = await driver.init(w3cCaps);
         try {
           await axios.post(`${baseUrl}/${sessionId}/fake_data`, {data: {fake: 'data'}});
           (await axios.get(`${baseUrl}/${sessionId}/fake_data`)).data.value.should.eql({fake: 'data'});
@@ -131,7 +131,7 @@ describe('FakePlugin', function () {
 
       it('should handle commands and not call the original', async function () {
         const driver = wd.promiseChainRemote(TEST_SERVER);
-        const [sessionId] = await driver.init(null, null, w3cCaps);
+        const [sessionId] = await driver.init(w3cCaps);
         try {
           await driver.source().should.eventually.eql(`<Fake>${JSON.stringify([sessionId])}</Fake>`);
         } finally {
@@ -141,7 +141,7 @@ describe('FakePlugin', function () {
 
       it('should handle commands and call the original if designed', async function () {
         const driver = wd.promiseChainRemote(TEST_SERVER);
-        const [sessionId] = await driver.init(null, null, w3cCaps);
+        const [sessionId] = await driver.init(w3cCaps);
         try {
           const el = (await axios.post(`${baseUrl}/${sessionId}/element`, {using: 'xpath', value: '//MockWebView'})).data.value;
           el.should.have.property('fake');

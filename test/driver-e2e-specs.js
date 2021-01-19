@@ -88,7 +88,7 @@ describe('FakeDriver - via HTTP', function () {
   describe('session handling', function () {
     it('should start and stop a session', async function () {
       let driver = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId] = await driver.init(null, null, createSessionW3CCaps);
+      let [sessionId] = await driver.init(createSessionW3CCaps);
       should.exist(sessionId);
       sessionId.should.be.a('string');
       await driver.quit();
@@ -97,11 +97,11 @@ describe('FakeDriver - via HTTP', function () {
 
     it('should be able to run two FakeDriver sessions simultaneously', async function () {
       let driver1 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId1] = await driver1.init(null, null, createSessionW3CCaps);
+      let [sessionId1] = await driver1.init(createSessionW3CCaps);
       should.exist(sessionId1);
       sessionId1.should.be.a('string');
       let driver2 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId2] = await driver2.init(null, null, createSessionW3CCaps);
+      let [sessionId2] = await driver2.init(createSessionW3CCaps);
       should.exist(sessionId2);
       sessionId2.should.be.a('string');
       sessionId1.should.not.equal(sessionId2);
@@ -113,11 +113,11 @@ describe('FakeDriver - via HTTP', function () {
       let uniqueCaps = _.clone(createSessionW3CCaps);
       uniqueCaps.uniqueApp = true;
       let driver1 = wd.promiseChainRemote(TEST_SERVER);
-      let [sessionId1] = await driver1.init(null, null, uniqueCaps);
+      let [sessionId1] = await driver1.init(uniqueCaps);
       should.exist(sessionId1);
       sessionId1.should.be.a('string');
       let driver2 = wd.promiseChainRemote(TEST_SERVER);
-      await driver2.init(null, null, createSessionW3CCaps).should.eventually.be.rejected;
+      await driver2.init(createSessionW3CCaps).should.eventually.be.rejected;
       await driver1.quit();
     });
 
@@ -126,9 +126,9 @@ describe('FakeDriver - via HTTP', function () {
 
       let localCaps = Object.assign({
         newCommandTimeout: 0.25,
-      }, null, null, createSessionW3CCaps);
+      }, createSessionW3CCaps);
 
-      let [sessionId] = await driver.init(null, null, localCaps);
+      let [sessionId] = await driver.init(localCaps);
       should.exist(sessionId);
 
       await B.delay(250);
